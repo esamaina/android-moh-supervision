@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SST" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/kenya_red</item>
+        <item name="colorOnPrimary">@color/kenya_white</item>
+        <item name="colorSecondary">@color/kenya_green</item>
+        <item name="colorOnSecondary">@color/kenya_white</item>
+        <item name="android:statusBarColor">@color/kenya_black</item>
+        <item name="android:navigationBarColor">@color/kenya_black</item>
+    </style>
+</resources>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/kenya_black">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Native Supervision Draft"
+            android:textColor="@color/kenya_white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/statusView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Draft ID:"
+            android:textColor="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleView" />
+
+        <Spinner
+            android:id="@+id/levelSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/kenya_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusView" />
+
+        <Spinner
+            android:id="@+id/recordStatusSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/levelSpinner" />
+
+        <EditText
+            android:id="@+id/countyInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/kenya_white"
+            android:hint="County"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recordStatusSpinner" />
+
+        <EditText
+            android:id="@+id/subCountyInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:hint="Sub County"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/countyInput" />
+
+        <EditText
+            android:id="@+id/chuInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:hint="CHU"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subCountyInput" />
+
+        <EditText
+            android:id="@+id/facilityInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:hint="Facility"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chuInput" />
+
+        <EditText
+            android:id="@+id/respondentTypeInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:hint="Respondent type (CHO/CHP/In-charge)"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/facilityInput" />
+
+        <EditText
+            android:id="@+id/respondentNameInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:hint="Respondent name"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/respondentTypeInput" />
+
+        <EditText
+            android:id="@+id/commentsInput"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:gravity="top"
+            android:hint="Assessment comments"
+            android:inputType="textMultiLine"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/respondentNameInput" />
+
+        <Button
+            android:id="@+id/saveDraftBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/kenya_green"
+            android:text="Save Draft"
+            android:textColor="@color/kenya_white"
+            app:layout_constraintEnd_toStartOf="@id/submitBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/commentsInput"
+            app:layout_constraintWidth_percent="0.48" />
+
+        <Button
+            android:id="@+id/actionPlanBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:text="Action Plan"
+            android:textColor="@color/kenya_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/saveDraftBtn" />
+
+        <Button
+            android:id="@+id/submitBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/kenya_red"
+            android:text="Submit"
+            android:textColor="@color/kenya_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/saveDraftBtn"
+            app:layout_constraintTop_toBottomOf="@id/commentsInput"
+            app:layout_constraintWidth_percent="0.48" />
+
+        <Button
+            android:id="@+id/clearDraftBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:text="Clear Draft"
+            android:textColor="@color/kenya_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actionPlanBtn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

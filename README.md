@@ -1,15 +1,20 @@
-# Android MOH Supervision
+# Android MOH Supervision (SST)
 
-Android client starter for the CHW supervision backend sync APIs.
+Offline-first Android client for CHW supervision with native workflows and sync recovery.
 
 ## What is included
 
-- Kotlin Android app scaffold
-- Retrofit client for:
-  - `POST /api/mobile/sync`
-  - `GET /api/mobile/sync`
-  - `GET /api/mobile/sync/state`
-- Simple UI to test push, pull, and sync-state calls
+- Kenyan-themed SST app shell (landing, login, role-aware menu)
+- Native supervision workflow (offline capture, edit, status updates)
+- Native action plan workflow linked to records
+- Native supervision records list with filters and status toggles
+- Sync center (push/pull/state + sync health)
+- Background sync scheduler (WorkManager)
+- Secure session persistence
+- Native module placeholders with web fallback for transition:
+  - reports
+  - dashboard
+  - user management
 
 ## Location
 
@@ -34,8 +39,29 @@ It is intentionally separate from the backend source.
 
 ## Authentication
 
-The app uses Basic Auth against backend credentials (`username/password`).
+- Current transport auth is backend Basic Auth.
+- Credentials/session are persisted using secure local storage path.
 
-## Next implementation step
+## Build
 
-Replace the sample generated push payload in `SyncRepository` with locally stored offline records from Room/SQLite queue.
+```bash
+./gradlew assembleDebug
+```
+
+For release signing, set:
+
+- `SST_KEYSTORE_PATH`
+- `SST_KEYSTORE_PASSWORD`
+- `SST_KEY_ALIAS`
+- `SST_KEY_PASSWORD`
+
+Then:
+
+```bash
+./gradlew clean assembleRelease
+```
+
+## Operations Docs
+
+- `docs/release-checklist.md`
+- `docs/operator-runbook.md`

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="kenya_black">#000000</color>
+    <color name="kenya_red">#BB0000</color>
+    <color name="kenya_green">#006600</color>
+    <color name="kenya_white">#FFFFFF</color>
+    <color name="surface_light">#F5F5F5</color>
+</resources>

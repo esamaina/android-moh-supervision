@@ -57,6 +57,42 @@ class SyncRepository(baseUrl: String) {
         )
     }
 
+    suspend fun pushDraft(
+        username: String,
+        password: String,
+        deviceId: String,
+        draft: SupervisionDraft
+    ): Map<String, Any?> {
+        val auth = basicAuth(username, password)
+        val record = SyncRecord(
+            id = draft.id,
+            status = draft.recordStatus,
+            form_data = mapOf(
+                "SupervisionTeam" to mapOf(
+                    "county" to draft.county,
+                    "subCounty" to draft.subCounty,
+                    "chu" to draft.chu,
+                    "facility" to draft.facility,
+                    "levelOfSupervision" to draft.levelOfSupervision,
+                    "whoAreRespondents" to draft.whoAreRespondents,
+                    "respondentName" to draft.respondentName
+                ),
+                "supervision" to mapOf(
+                    "comments" to draft.comments
+                ),
+                "actionplan" to mapOf(
+                    "plan" to draft.actionPlan,
+                    "dueDate" to draft.actionPlanDueDate
+                )
+            )
+        )
+        return service.pushSync(
+            auth = auth,
+            deviceId = deviceId,
+            request = PushSyncRequest(deviceId = deviceId, records = listOf(record))
+        )
+    }
+
     suspend fun pull(username: String, password: String, deviceId: String): PullSyncResponse {
         return service.pullSync(
             auth = basicAuth(username, password),

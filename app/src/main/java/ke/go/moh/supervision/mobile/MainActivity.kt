@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import ke.go.moh.supervision.mobile.data.SupervisionDraftStore
 import ke.go.moh.supervision.mobile.data.SyncRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,10 +22,25 @@ class MainActivity : AppCompatActivity() {
         val usernameInput = findViewById<EditText>(R.id.usernameInput)
         val passwordInput = findViewById<EditText>(R.id.passwordInput)
         val deviceIdInput = findViewById<EditText>(R.id.deviceIdInput)
+        val backBtn = findViewById<Button>(R.id.backMenuBtn)
         val pushBtn = findViewById<Button>(R.id.pushSyncBtn)
         val pullBtn = findViewById<Button>(R.id.pullSyncBtn)
         val stateBtn = findViewById<Button>(R.id.stateBtn)
         val outputView = findViewById<TextView>(R.id.outputView)
+        val session = SessionManager(this)
+        val store = SupervisionDraftStore(this)
+
+        baseUrlInput.setText(session.getBaseUrl())
+        usernameInput.setText(session.getUsername())
+        passwordInput.setText(session.getPassword())
+
+        backBtn.setOnClickListener { finish() }
+        fun syncHealthLine(): String {
+            val all = store.loadAll()
+            val pending = all.count { it.syncStatus != "synced" }
+            val failed = all.count { it.syncStatus == "failed" }
+            return "Sync health -> pending: $pending, failed: $failed, total: ${all.size}"
+        }
 
         fun setLoading(loading: Boolean) {
             pushBtn.isEnabled = !loading
@@ -41,6 +58,14 @@ class MainActivity : AppCompatActivity() {
 
         pushBtn.setOnClickListener {
             val (username, password, deviceId) = credentials()
+            if (username.isBlank() || password.isBlank() || deviceId.isBlank()) {
+                Toast.makeText(this, "Enter username, password and device ID", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+            session.saveBaseUrl(baseUrlInput.text.toString().trim())
+            session.saveUsername(username)
+            session.savePassword(password)
             val repository = SyncRepository(baseUrlInput.text.toString().trim())
             setLoading(true)
             lifecycleScope.launch {
@@ -48,9 +73,9 @@ class MainActivity : AppCompatActivity() {
                     val result = withContext(Dispatchers.IO) {
                         repository.push(username, password, deviceId)
                     }
-                    outputView.text = "Push success:\n$result"
+                    outputView.text = "Push success:\n$result\n${syncHealthLine()}"
                 } catch (e: Exception) {
-                    outputView.text = "Push failed:\n${e.message}"
+                    outputView.text = "Push failed:\n${e.message}\n${syncHealthLine()}"
                 } finally {
                     setLoading(false)
                 }
@@ -59,6 +84,11 @@ class MainActivity : AppCompatActivity() {
 
         pullBtn.setOnClickListener {
             val (username, password, deviceId) = credentials()
+            if (username.isBlank() || password.isBlank() || deviceId.isBlank()) {
+                Toast.makeText(this, "Enter username, password and device ID", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
             val repository = SyncRepository(baseUrlInput.text.toString().trim())
             setLoading(true)
             lifecycleScope.launch {
@@ -67,9 +97,9 @@ class MainActivity : AppCompatActivity() {
                         repository.pull(username, password, deviceId)
                     }
                     outputView.text =
-                        "Pull success:\nmessage=${result.message}\nrecords=${result.records.size}\npage=${result.page}"
+                        "Pull success:\nmessage=${result.message}\nrecords=${result.records.size}\npage=${result.page}\n${syncHealthLine()}"
                 } catch (e: Exception) {
-                    outputView.text = "Pull failed:\n${e.message}"
+                    outputView.text = "Pull failed:\n${e.message}\n${syncHealthLine()}"
                 } finally {
                     setLoading(false)
                 }
@@ -78,6 +108,11 @@ class MainActivity : AppCompatActivity() {
 
         stateBtn.setOnClickListener {
             val (username, password, deviceId) = credentials()
+            if (username.isBlank() || password.isBlank() || deviceId.isBlank()) {
+                Toast.makeText(this, "Enter username, password and device ID", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
             val repository = SyncRepository(baseUrlInput.text.toString().trim())
             setLoading(true)
             lifecycleScope.launch {
@@ -86,9 +121,9 @@ class MainActivity : AppCompatActivity() {
                         repository.state(username, password, deviceId)
                     }
                     outputView.text =
-                        "State:\nexists=${result.exists}\nlastSyncedAt=${result.lastSyncedAt}\nserverTime=${result.serverTime}"
+                        "State:\nexists=${result.exists}\nlastSyncedAt=${result.lastSyncedAt}\nserverTime=${result.serverTime}\n${syncHealthLine()}"
                 } catch (e: Exception) {
-                    outputView.text = "State check failed:\n${e.message}"
+                    outputView.text = "State check failed:\n${e.message}\n${syncHealthLine()}"
                 } finally {
                     setLoading(false)
                 }
