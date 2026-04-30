@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/kenya_black"
+    android:background="@color/surface_light"
     android:padding="16dp">
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Native Dashboard"
-        android:textColor="@color/kenya_white"
+        android:textColor="@color/kenya_black"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

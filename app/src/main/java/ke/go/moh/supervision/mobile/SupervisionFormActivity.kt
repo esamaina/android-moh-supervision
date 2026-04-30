@@ -74,8 +74,7 @@ class SupervisionFormActivity : AppCompatActivity() {
             "partnership",
             "pandemic",
             "supervision",
-            "servicedelivery",
-            "actionplan"
+            "servicedelivery"
         )
         val statuses = listOf("incomplete", "completed")
         val sections = listOf("Location", "Respondent", "Assessment")

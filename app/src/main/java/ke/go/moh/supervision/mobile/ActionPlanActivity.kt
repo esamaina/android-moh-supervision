@@ -1,10 +1,10 @@
 package ke.go.moh.supervision.mobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ke.go.moh.supervision.mobile.data.SupervisionDraftStore
 
@@ -20,28 +20,30 @@ class ActionPlanActivity : AppCompatActivity() {
         val titleView = findViewById<TextView>(R.id.titleView)
         val planInput = findViewById<EditText>(R.id.planInput)
         val dueDateInput = findViewById<EditText>(R.id.dueDateInput)
-        val saveBtn = findViewById<Button>(R.id.saveBtn)
+        val openWebBtn = findViewById<Button>(R.id.saveBtn)
 
         if (draft == null) {
             titleView.text = "Action Plan (Draft not found)"
-            saveBtn.isEnabled = false
+            openWebBtn.isEnabled = false
             return
         }
 
-        titleView.text = "Action Plan (${draft.id.take(8)})"
-        planInput.setText(draft.actionPlan)
-        dueDateInput.setText(draft.actionPlanDueDate)
+        titleView.text = "Action Plan Report (${draft.id.take(8)})"
+        if (draft.actionPlan.isBlank() && draft.actionPlanDueDate.isBlank()) {
+            planInput.setText("No action plan report available offline. Create it in the web app.")
+            dueDateInput.setText("N/A")
+        } else {
+            planInput.setText(draft.actionPlan)
+            dueDateInput.setText(draft.actionPlanDueDate.ifBlank { "N/A" })
+        }
+        planInput.isEnabled = false
+        dueDateInput.isEnabled = false
 
-        saveBtn.setOnClickListener {
-            store.save(
-                draft.copy(
-                    actionPlan = planInput.text.toString().trim(),
-                    actionPlanDueDate = dueDateInput.text.toString().trim(),
-                    updatedAt = System.currentTimeMillis()
-                )
-            )
-            Toast.makeText(this, "Action plan saved", Toast.LENGTH_SHORT).show()
-            finish()
+        openWebBtn.setOnClickListener {
+            startActivity(Intent(this, WebModuleActivity::class.java).apply {
+                putExtra("title", "Action Plan Report")
+                putExtra("path", "/scores")
+            })
         }
     }
 }

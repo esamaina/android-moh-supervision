@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
-setProperty("archivesBaseName", "SST")
+setProperty("archivesBaseName", "MOH-SST")
 
 android {
     namespace = "ke.go.moh.supervision.mobile"

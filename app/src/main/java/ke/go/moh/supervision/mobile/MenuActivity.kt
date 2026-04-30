@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import java.util.UUID
 
 class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,6 +13,7 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
 
         val session = SessionManager(this)
+        val isOfflineMode = session.getMode() == "offline"
         if (!session.hasCredentials()) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -19,16 +21,36 @@ class MenuActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.supervisionBtn).setOnClickListener {
-            startActivity(Intent(this, SupervisionFormActivity::class.java))
+            if (isOfflineMode) {
+                startActivity(Intent(this, SupervisionFormActivity::class.java))
+            } else {
+                startActivity(Intent(this, WebModuleActivity::class.java).apply {
+                    putExtra("title", "New Supervision")
+                    putExtra("path", "/new-supervision/${UUID.randomUUID()}")
+                })
+            }
         }
         findViewById<Button>(R.id.reportsBtn).setOnClickListener {
-            startActivity(Intent(this, ReportsActivity::class.java))
+            startActivity(Intent(this, WebModuleActivity::class.java).apply {
+                putExtra("title", "Dashboard")
+                putExtra("path", "/dashboard")
+            })
         }
         findViewById<Button>(R.id.dashboardBtn).setOnClickListener {
-            startActivity(Intent(this, DashboardActivity::class.java))
+            if (isOfflineMode) {
+                startActivity(Intent(this, DraftHistoryActivity::class.java))
+            } else {
+                startActivity(Intent(this, WebModuleActivity::class.java).apply {
+                    putExtra("title", "Supervision Record")
+                    putExtra("path", "/scores")
+                })
+            }
         }
         findViewById<Button>(R.id.usersBtn).setOnClickListener {
-            startActivity(Intent(this, UserManagementActivity::class.java))
+            startActivity(Intent(this, WebModuleActivity::class.java).apply {
+                putExtra("title", "Users")
+                putExtra("path", "/users")
+            })
         }
         findViewById<Button>(R.id.syncBtn).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))

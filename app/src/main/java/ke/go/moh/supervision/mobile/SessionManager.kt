@@ -6,6 +6,7 @@ import kotlinx.coroutines.runBlocking
 
 class SessionManager(context: Context) {
     private val secureRepo = SecureSessionRepository(context)
+    private val prefs = context.getSharedPreferences("sst_ui_mode", Context.MODE_PRIVATE)
 
     fun saveBaseUrl(baseUrl: String) = save(
         baseUrl = baseUrl,
@@ -45,4 +46,11 @@ class SessionManager(context: Context) {
 
     fun hasCredentials(): Boolean = getUsername().isNotBlank() && getPassword().isNotBlank()
     fun clearSession() = runBlocking { secureRepo.clear() }
+
+    fun setMode(mode: String) {
+        val safe = if (mode == "offline") "offline" else "online"
+        prefs.edit().putString("mode", safe).apply()
+    }
+
+    fun getMode(): String = prefs.getString("mode", "online") ?: "online"
 }

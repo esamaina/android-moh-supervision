@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/kenya_black"
+    android:background="@color/surface_light"
     android:padding="16dp">
 
     <TextView
@@ -11,9 +11,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="SST Login"
-        android:textColor="@color/kenya_white"
+        android:textColor="@color/kenya_black"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoView" />
+
+    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:contentDescription="MOH coat of arms logo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/court_of_arms_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

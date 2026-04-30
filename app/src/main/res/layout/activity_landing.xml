@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/kenya_black"
+    android:background="@color/surface_light"
     android:padding="24dp">
 
     <TextView
@@ -12,13 +12,24 @@
         android:layout_height="wrap_content"
         android:text="Support Supervision Tool"
         android:textAlignment="center"
-        android:textColor="@color/kenya_white"
+        android:textColor="@color/kenya_black"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoView"
         app:layout_constraintVertical_bias="0.25" />
+
+    <ImageView
+        android:id="@+id/logoView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="MOH coat of arms logo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/court_of_arms_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/subtitleView"
@@ -33,6 +44,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleView" />
 
+    <RadioGroup
+        android:id="@+id/modeGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subtitleView">
+
+        <RadioButton
+            android:id="@+id/modeOnline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="Online"
+            android:textColor="@color/kenya_black" />
+
+        <RadioButton
+            android:id="@+id/modeOffline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offline"
+            android:textColor="@color/kenya_black" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/getStartedBtn"
         android:layout_width="0dp"
@@ -43,6 +80,6 @@
         android:textColor="@color/kenya_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subtitleView" />
+        app:layout_constraintTop_toBottomOf="@id/modeGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
         <item name="colorOnPrimary">@color/kenya_white</item>
         <item name="colorSecondary">@color/kenya_green</item>
         <item name="colorOnSecondary">@color/kenya_white</item>
-        <item name="android:statusBarColor">@color/kenya_black</item>
-        <item name="android:navigationBarColor">@color/kenya_black</item>
+        <item name="android:statusBarColor">@color/surface_light</item>
+        <item name="android:navigationBarColor">@color/surface_light</item>
     </style>
 </resources>
