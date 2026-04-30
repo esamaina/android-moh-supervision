@@ -1,6 +1,7 @@
 package ke.go.moh.supervision.mobile.data
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SupervisionDraftMapperTest {
@@ -18,6 +19,7 @@ class SupervisionDraftMapperTest {
             comments = "All good",
             actionPlan = "Follow up next week",
             actionPlanDueDate = "2026-05-10",
+            allPillarsPayloadJson = """{"workforce":{"q1":"yes"}}""",
             recordStatus = "completed",
             syncStatus = "draft",
             updatedAt = 123L
@@ -28,5 +30,6 @@ class SupervisionDraftMapperTest {
         assertEquals(draft.county, restored.county)
         assertEquals(draft.recordStatus, restored.recordStatus)
         assertEquals(draft.actionPlan, restored.actionPlan)
+        assertTrue(restored.allPillarsPayloadJson.contains("workforce"))
     }
 }

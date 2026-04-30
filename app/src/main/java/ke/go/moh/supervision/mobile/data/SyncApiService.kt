@@ -30,4 +30,9 @@ interface SyncApiService {
         @Header("Authorization") auth: String,
         @Header("x-device-id") deviceId: String,
     ): StateResponse
+
+    @GET("/api/mobile/questionnaire/schema")
+    suspend fun getQuestionnaireSchema(
+        @Header("Authorization") auth: String,
+    ): QuestionnaireSchemaResponse
 }

@@ -33,15 +33,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleView" />
 
+        <TextView
+            android:id="@+id/sectionView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Section: Location"
+            android:textColor="@color/kenya_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusView" />
+
+        <TextView
+            android:id="@+id/scoreView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Readiness score: 0.0%"
+            android:textColor="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sectionView" />
+
+        <TextView
+            android:id="@+id/schemaStatusView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Questionnaire schema: pending"
+            android:textColor="@color/kenya_white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scoreView" />
+
         <Spinner
             android:id="@+id/levelSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Select level of supervision"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/statusView" />
+            app:layout_constraintTop_toBottomOf="@id/schemaStatusView" />
 
         <Spinner
             android:id="@+id/recordStatusSpinner"
@@ -49,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Select record completion status"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/levelSpinner" />
@@ -59,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="County input"
             android:hint="County"
             android:textColor="@color/kenya_black"
             android:textColorHint="@color/kenya_green"
@@ -72,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Sub county input"
             android:hint="Sub County"
             android:textColor="@color/kenya_black"
             android:textColorHint="@color/kenya_green"
@@ -85,6 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="CHU input"
             android:hint="CHU"
             android:textColor="@color/kenya_black"
             android:textColorHint="@color/kenya_green"
@@ -98,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Facility input"
             android:hint="Facility"
             android:textColor="@color/kenya_black"
             android:textColorHint="@color/kenya_green"
@@ -111,6 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Respondent type input"
             android:hint="Respondent type (CHO/CHP/In-charge)"
             android:textColor="@color/kenya_black"
             android:textColorHint="@color/kenya_green"
@@ -124,6 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Respondent name input"
             android:hint="Respondent name"
             android:textColor="@color/kenya_black"
             android:textColorHint="@color/kenya_green"
@@ -137,6 +179,7 @@
             android:layout_height="120dp"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Assessment comments input"
             android:gravity="top"
             android:hint="Assessment comments"
             android:inputType="textMultiLine"
@@ -146,17 +189,99 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/respondentNameInput" />
 
+        <Spinner
+            android:id="@+id/pillarSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Select questionnaire pillar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/commentsInput" />
+
+        <EditText
+            android:id="@+id/questionKeyInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:hint="Question key (e.g. q1_availability)"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pillarSpinner" />
+
+        <EditText
+            android:id="@+id/questionValueInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:hint="Question value"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toStartOf="@id/addQuestionBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/questionKeyInput"
+            app:layout_constraintWidth_percent="0.7" />
+
+        <Button
+            android:id="@+id/addQuestionBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_green"
+            android:text="Upsert"
+            android:textColor="@color/kenya_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/questionValueInput"
+            app:layout_constraintTop_toBottomOf="@id/questionKeyInput"
+            app:layout_constraintWidth_percent="0.28" />
+
+        <TextView
+            android:id="@+id/pillarPreviewView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/surface_light"
+            android:padding="8dp"
+            android:text="Pillar preview"
+            android:textColor="@color/kenya_black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/questionValueInput" />
+
+        <EditText
+            android:id="@+id/allPillarsPayloadInput"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:contentDescription="All pillars questionnaire payload json"
+            android:gravity="top"
+            android:hint="Optional full questionnaire JSON payload (all pillars/questions)"
+            android:inputType="textMultiLine"
+            android:textColor="@color/kenya_black"
+            android:textColorHint="@color/kenya_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pillarPreviewView" />
+
         <Button
             android:id="@+id/saveDraftBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/kenya_green"
+            android:contentDescription="Save current supervision draft locally"
             android:text="Save Draft"
             android:textColor="@color/kenya_white"
             app:layout_constraintEnd_toStartOf="@id/submitBtn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/commentsInput"
+            app:layout_constraintTop_toBottomOf="@id/allPillarsPayloadInput"
             app:layout_constraintWidth_percent="0.48" />
 
         <Button
@@ -165,6 +290,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Open action plan editor for this record"
             android:text="Action Plan"
             android:textColor="@color/kenya_black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -172,16 +298,45 @@
             app:layout_constraintTop_toBottomOf="@id/saveDraftBtn" />
 
         <Button
+            android:id="@+id/prevSectionBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Go to previous form section"
+            android:text="Previous Section"
+            android:textColor="@color/kenya_black"
+            app:layout_constraintEnd_toStartOf="@id/nextSectionBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actionPlanBtn"
+            app:layout_constraintWidth_percent="0.48" />
+
+        <Button
+            android:id="@+id/nextSectionBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/kenya_green"
+            android:contentDescription="Go to next form section"
+            android:text="Next Section"
+            android:textColor="@color/kenya_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/prevSectionBtn"
+            app:layout_constraintTop_toBottomOf="@id/actionPlanBtn"
+            app:layout_constraintWidth_percent="0.48" />
+
+        <Button
             android:id="@+id/submitBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/kenya_red"
+            android:contentDescription="Submit current record for synchronization"
             android:text="Submit"
             android:textColor="@color/kenya_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/saveDraftBtn"
-            app:layout_constraintTop_toBottomOf="@id/commentsInput"
+            app:layout_constraintTop_toBottomOf="@id/nextSectionBtn"
             app:layout_constraintWidth_percent="0.48" />
 
         <Button
@@ -190,12 +345,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/kenya_white"
+            android:contentDescription="Delete current draft from local storage"
             android:text="Clear Draft"
             android:textColor="@color/kenya_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/actionPlanBtn" />
+            app:layout_constraintTop_toBottomOf="@id/submitBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

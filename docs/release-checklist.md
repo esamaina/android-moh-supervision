@@ -10,6 +10,14 @@
 - Run:
   - `./gradlew clean assembleRelease`
 - Confirm output APK is generated with `SST` naming.
+- CI workflows:
+  - `.github/workflows/android-ci.yml` (PR/main validation + debug APK artifact)
+  - `.github/workflows/android-release.yml` (tag/manual release build + release APK artifact)
+- For signed release in GitHub Actions, set repository secrets:
+  - `SST_KEYSTORE_BASE64`
+  - `SST_KEYSTORE_PASSWORD`
+  - `SST_KEY_ALIAS`
+  - `SST_KEY_PASSWORD`
 
 ## Offline Functionality Validation
 - Create supervision records offline.

@@ -8,14 +8,18 @@ class OfflineRecordRepository(context: Context) {
     private val dao = AppDatabase.get(context).supervisionDao()
     private val queueDao = AppDatabase.get(context).syncQueueDao()
 
-    suspend fun save(draft: SupervisionDraft) {
+    suspend fun save(draft: SupervisionDraft, enqueueForSync: Boolean = true) {
         dao.upsert(draft.toEntity())
-        queueDao.enqueue(
-            ke.go.moh.supervision.mobile.db.SyncQueueEntity(
-                recordId = draft.id,
-                operation = "upsert"
+        if (enqueueForSync) {
+            queueDao.enqueue(
+                ke.go.moh.supervision.mobile.db.SyncQueueEntity(
+                    recordId = draft.id,
+                    operation = "upsert"
+                )
             )
-        )
+        } else {
+            queueDao.deleteByRecordId(draft.id)
+        }
     }
 
     suspend fun getAll(): List<SupervisionDraft> = dao.getAll().map { it.toDraft() }
@@ -35,8 +39,10 @@ fun SupervisionDraft.toEntity(): SupervisionRecordEntity = SupervisionRecordEnti
     comments = comments,
     actionPlan = actionPlan,
     actionPlanDueDate = actionPlanDueDate,
+    allPillarsPayloadJson = allPillarsPayloadJson,
     recordStatus = recordStatus,
     syncStatus = syncStatus,
+    conflictPolicy = conflictPolicy,
     updatedAt = updatedAt
 )
 
@@ -52,7 +58,9 @@ fun SupervisionRecordEntity.toDraft(): SupervisionDraft = SupervisionDraft(
     comments = comments,
     actionPlan = actionPlan,
     actionPlanDueDate = actionPlanDueDate,
+    allPillarsPayloadJson = allPillarsPayloadJson,
     recordStatus = recordStatus,
     syncStatus = syncStatus,
+    conflictPolicy = conflictPolicy,
     updatedAt = updatedAt
 )

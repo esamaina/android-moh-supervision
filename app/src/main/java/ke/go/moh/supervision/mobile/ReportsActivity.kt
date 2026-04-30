@@ -6,19 +6,28 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ke.go.moh.supervision.mobile.data.SupervisionDraftStore
+import ke.go.moh.supervision.mobile.data.buildOfflineAnalytics
 
 class ReportsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reports)
 
-        val records = SupervisionDraftStore(this).loadAll()
-        val completed = records.count { it.recordStatus == "completed" }
-        val incomplete = records.size - completed
-        val syncPending = records.count { it.syncStatus != "synced" }
+        val summaryView = findViewById<TextView>(R.id.summaryView)
+        val detailView = findViewById<TextView>(R.id.detailView)
+        val refreshBtn = findViewById<Button>(R.id.refreshBtn)
 
-        findViewById<TextView>(R.id.summaryView).text =
-            "Total records: ${records.size}\nCompleted: $completed\nIncomplete: $incomplete\nPending sync: $syncPending"
+        fun render() {
+            val analytics = buildOfflineAnalytics(SupervisionDraftStore(this).loadAll())
+            summaryView.text =
+                "Total records: ${analytics.total}\nCompleted: ${analytics.completed}\nIncomplete: ${analytics.incomplete}\nSynced: ${analytics.synced}\nPending sync: ${analytics.pendingSync}\nFailed sync: ${analytics.failedSync}\nAction plans: ${analytics.withActionPlan}"
+            detailView.text =
+                "By Level:\n" + analytics.byLevel.entries.joinToString("\n") { "${it.key}: ${it.value}" } +
+                    "\n\nBy Respondent:\n" +
+                    analytics.byRespondent.entries.joinToString("\n") { "${it.key}: ${it.value}" }
+        }
+        render()
+        refreshBtn.setOnClickListener { render() }
 
         findViewById<Button>(R.id.openWebReportsBtn).setOnClickListener {
             val intent = Intent(this, WebModuleActivity::class.java)

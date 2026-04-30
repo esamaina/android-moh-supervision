@@ -16,7 +16,9 @@ data class SupervisionRecordEntity(
     val comments: String,
     val actionPlan: String,
     val actionPlanDueDate: String,
+    val allPillarsPayloadJson: String,
     val recordStatus: String,
     val syncStatus: String,
+    val conflictPolicy: String,
     val updatedAt: Long,
 )

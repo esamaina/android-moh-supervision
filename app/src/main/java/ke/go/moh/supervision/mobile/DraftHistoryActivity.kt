@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import ke.go.moh.supervision.mobile.data.SupervisionDraft
 import ke.go.moh.supervision.mobile.data.SupervisionDraftStore
 import ke.go.moh.supervision.mobile.data.SyncRepository
+import ke.go.moh.supervision.mobile.sync.DeviceIdProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,6 +24,7 @@ class DraftHistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_draft_history)
 
         val session = SessionManager(this)
+        val deviceIdProvider = DeviceIdProvider(this)
         val store = SupervisionDraftStore(this)
         val listView = findViewById<ListView>(R.id.draftList)
         val syncAllBtn = findViewById<Button>(R.id.syncAllBtn)
@@ -30,6 +32,7 @@ class DraftHistoryActivity : AppCompatActivity() {
         val syncSelectedBtn = findViewById<Button>(R.id.syncSelectedBtn)
         val toggleStatusBtn = findViewById<Button>(R.id.toggleStatusBtn)
         val deleteSelectedBtn = findViewById<Button>(R.id.deleteFirstBtn)
+        val conflictBtn = findViewById<Button>(R.id.resolveConflictBtn)
         val filterSpinner = findViewById<Spinner>(R.id.statusFilterSpinner)
         var selectedDraftId: String? = null
         var currentItems = emptyList<SupervisionDraft>()
@@ -43,7 +46,7 @@ class DraftHistoryActivity : AppCompatActivity() {
                 this,
                 android.R.layout.simple_list_item_1,
                 currentItems.map {
-                    "${it.levelOfSupervision.uppercase()} | ${it.county}/${it.subCounty} | record:${it.recordStatus} | sync:${it.syncStatus} | ${it.id.take(8)}"
+                    "${it.levelOfSupervision.uppercase()} | ${it.county}/${it.subCounty} | record:${it.recordStatus} | sync:${it.syncStatus} | conflict:${it.conflictPolicy} | ${it.id.take(8)}"
                 }
             )
         }
@@ -93,6 +96,35 @@ class DraftHistoryActivity : AppCompatActivity() {
             refresh()
         }
 
+        conflictBtn.setOnClickListener {
+            val draftId = selectedDraftId
+            if (draftId == null) {
+                Toast.makeText(this, "Tap a record first", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val draft = store.loadAll().firstOrNull { it.id == draftId } ?: return@setOnClickListener
+            AlertDialog.Builder(this)
+                .setTitle("Resolve conflict")
+                .setItems(arrayOf("Server wins", "Local wins", "Clear policy")) { _, which ->
+                    val policy = when (which) {
+                        0 -> "server_wins"
+                        1 -> "local_wins"
+                        else -> "none"
+                    }
+                    val nextSync = if (policy == "none") draft.syncStatus else "draft"
+                    store.save(
+                        draft.copy(
+                            conflictPolicy = policy,
+                            syncStatus = nextSync,
+                            updatedAt = System.currentTimeMillis()
+                        )
+                    )
+                    refresh()
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        }
+
         deleteSelectedBtn.setOnClickListener {
             val draftId = selectedDraftId
             if (draftId == null) {
@@ -129,7 +161,7 @@ class DraftHistoryActivity : AppCompatActivity() {
                 try {
                     withContext(Dispatchers.IO) {
                         SyncRepository(session.getBaseUrl()).pushDraft(
-                            username, password, "android-dev-001", draft
+                            username, password, deviceIdProvider.getOrCreate(), draft
                         )
                     }
                     store.save(draft.copy(syncStatus = "synced", updatedAt = System.currentTimeMillis()))
@@ -160,11 +192,12 @@ class DraftHistoryActivity : AppCompatActivity() {
                 for (draft in drafts) {
                     try {
                         withContext(Dispatchers.IO) {
-                            repo.pushDraft(username, password, "android-dev-001", draft)
+                            repo.pushDraft(username, password, deviceIdProvider.getOrCreate(), draft)
                         }
                         store.save(
                             draft.copy(
                                 syncStatus = "synced",
+                                conflictPolicy = "none",
                                 updatedAt = System.currentTimeMillis()
                             )
                         )
@@ -173,6 +206,7 @@ class DraftHistoryActivity : AppCompatActivity() {
                         store.save(
                             draft.copy(
                                 syncStatus = "failed",
+                                conflictPolicy = if (draft.conflictPolicy == "none") "server_wins" else draft.conflictPolicy,
                                 updatedAt = System.currentTimeMillis()
                             )
                         )

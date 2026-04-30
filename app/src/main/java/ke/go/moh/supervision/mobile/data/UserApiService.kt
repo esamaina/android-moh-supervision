@@ -26,4 +26,10 @@ interface UserApiService {
         @Path("id") id: String,
         @Body body: Map<String, String>
     ): Map<String, Any?>
+
+    @POST("/api/mobile/users")
+    suspend fun createUser(
+        @Header("Authorization") auth: String,
+        @Body body: Map<String, String>
+    ): Map<String, Any?>
 }

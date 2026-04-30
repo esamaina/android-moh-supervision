@@ -21,21 +21,45 @@
     <TextView
         android:id="@+id/summaryView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@color/surface_light"
         android:padding="12dp"
         android:textColor="@color/kenya_black"
-        app:layout_constraintBottom_toTopOf="@id/openWebReportsBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleView" />
+
+    <TextView
+        android:id="@+id/detailView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/surface_light"
+        android:padding="12dp"
+        android:textColor="@color/kenya_black"
+        app:layout_constraintBottom_toTopOf="@id/refreshBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/summaryView" />
+
+    <Button
+        android:id="@+id/refreshBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/kenya_red"
+        android:text="Refresh Native Analytics"
+        android:textColor="@color/kenya_white"
+        app:layout_constraintBottom_toTopOf="@id/openWebReportsBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/openWebReportsBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/kenya_green"
         android:text="Open Web Reports Fallback"
         android:textColor="@color/kenya_white"

@@ -61,4 +61,23 @@ class UserRepository(baseUrl: String) {
             mapOf("newPassword" to newPassword)
         )
     }
+
+    suspend fun createUser(
+        username: String,
+        password: String,
+        email: String,
+        newUsername: String,
+        newPassword: String,
+        role: String
+    ): Map<String, Any?> {
+        return service.createUser(
+            basicAuth(username, password),
+            mapOf(
+                "email" to email,
+                "username" to newUsername,
+                "password" to newPassword,
+                "newRole" to role
+            )
+        )
+    }
 }

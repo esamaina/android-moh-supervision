@@ -28,17 +28,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleView" />
 
+    <TextView
+        android:id="@+id/statusView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/kenya_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roleView" />
+
     <Button
         android:id="@+id/loadUsersBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/kenya_green"
+        android:contentDescription="Load user list"
         android:text="Load Users"
         android:textColor="@color/kenya_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/roleView" />
+        app:layout_constraintTop_toBottomOf="@id/statusView" />
+
+    <Button
+        android:id="@+id/createUserBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/kenya_red"
+        android:contentDescription="Create a new user account"
+        android:text="Create User"
+        android:textColor="@color/kenya_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadUsersBtn" />
 
     <ListView
         android:id="@+id/usersList"
@@ -46,10 +70,11 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:background="@color/surface_light"
+        android:contentDescription="List of users and current statuses"
         app:layout_constraintBottom_toTopOf="@id/openWebUsersBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loadUsersBtn" />
+        app:layout_constraintTop_toBottomOf="@id/createUserBtn" />
 
     <Button
         android:id="@+id/openWebUsersBtn"
@@ -57,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/kenya_white"
+        android:contentDescription="Open web fallback user management"
         android:text="Open Web User Management Fallback"
         android:textColor="@color/kenya_black"
         app:layout_constraintBottom_toBottomOf="parent"

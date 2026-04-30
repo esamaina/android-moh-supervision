@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -28,10 +29,12 @@ class UserManagementActivity : AppCompatActivity() {
         val baseUrl = session.getBaseUrl()
         val listView = findViewById<ListView>(R.id.usersList)
         val loadBtn = findViewById<Button>(R.id.loadUsersBtn)
+        val createBtn = findViewById<Button>(R.id.createUserBtn)
+        val statusView = findViewById<TextView>(R.id.statusView)
 
         findViewById<TextView>(R.id.roleView).text = "Role: $role"
+        statusView.text = "Status: ready"
         var users: List<MobileUser> = emptyList()
-        var selected: MobileUser? = null
 
         fun render() {
             listView.adapter = ArrayAdapter(
@@ -43,24 +46,36 @@ class UserManagementActivity : AppCompatActivity() {
 
         if (role !in listOf("admin", "national", "county", "subcounty")) {
             loadBtn.isEnabled = false
+            createBtn.isEnabled = false
+            statusView.text = "Status: role not permitted for native user management"
             Toast.makeText(this, "Role not permitted for native user management", Toast.LENGTH_LONG).show()
         }
 
         loadBtn.setOnClickListener {
+            loadBtn.isEnabled = false
+            createBtn.isEnabled = false
+            statusView.text = "Status: loading users..."
             lifecycleScope.launch {
                 try {
                     users = withContext(Dispatchers.IO) {
                         UserRepository(baseUrl).getUsers(username, password)
                     }
                     render()
+                    statusView.text = "Status: loaded ${users.size} users"
                 } catch (e: Exception) {
+                    statusView.text = "Status: load failed"
                     Toast.makeText(this@UserManagementActivity, "Load failed: ${e.message}", Toast.LENGTH_LONG).show()
+                } finally {
+                    if (role in listOf("admin", "national", "county", "subcounty")) {
+                        loadBtn.isEnabled = true
+                        createBtn.isEnabled = true
+                    }
                 }
             }
         }
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            selected = users.getOrNull(position)
+            users.getOrNull(position)
         }
 
         listView.setOnItemLongClickListener { _, _, position, _ ->
@@ -68,6 +83,7 @@ class UserManagementActivity : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle("User action")
                 .setItems(arrayOf("Toggle active/inactive", "Reset password to TempPass123")) { _, which ->
+                    statusView.text = "Status: applying user action..."
                     lifecycleScope.launch {
                         try {
                             val repo = UserRepository(baseUrl)
@@ -82,7 +98,9 @@ class UserManagementActivity : AppCompatActivity() {
                                 repo.getUsers(username, password)
                             }
                             render()
+                            statusView.text = "Status: user action applied"
                         } catch (e: Exception) {
+                            statusView.text = "Status: user action failed"
                             Toast.makeText(
                                 this@UserManagementActivity,
                                 "Action failed: ${e.message}",
@@ -94,6 +112,52 @@ class UserManagementActivity : AppCompatActivity() {
                 .setNegativeButton("Cancel", null)
                 .show()
             true
+        }
+
+        createBtn.setOnClickListener {
+            val emailInput = EditText(this).apply { hint = "Email" }
+            val usernameInput = EditText(this).apply { hint = "Username" }
+            val passwordInput = EditText(this).apply { hint = "Password (min 8 chars)" }
+            val roleInput = EditText(this).apply { hint = "Role (cha/subcounty/county/national/admin)" }
+            val container = android.widget.LinearLayout(this).apply {
+                orientation = android.widget.LinearLayout.VERTICAL
+                setPadding(40, 20, 40, 0)
+                addView(emailInput)
+                addView(usernameInput)
+                addView(passwordInput)
+                addView(roleInput)
+            }
+            AlertDialog.Builder(this)
+                .setTitle("Create user")
+                .setView(container)
+                .setPositiveButton("Create") { _, _ ->
+                    statusView.text = "Status: creating user..."
+                    lifecycleScope.launch {
+                        try {
+                            withContext(Dispatchers.IO) {
+                                UserRepository(baseUrl).createUser(
+                                    username = username,
+                                    password = password,
+                                    email = emailInput.text.toString().trim(),
+                                    newUsername = usernameInput.text.toString().trim(),
+                                    newPassword = passwordInput.text.toString(),
+                                    role = roleInput.text.toString().trim().ifBlank { "cha" }
+                                )
+                            }
+                            users = withContext(Dispatchers.IO) {
+                                UserRepository(baseUrl).getUsers(username, password)
+                            }
+                            render()
+                            statusView.text = "Status: user created"
+                            Toast.makeText(this@UserManagementActivity, "User created", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            statusView.text = "Status: create failed"
+                            Toast.makeText(this@UserManagementActivity, "Create failed: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
 
         findViewById<Button>(R.id.openWebUsersBtn).setOnClickListener {

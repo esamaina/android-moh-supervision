@@ -14,7 +14,9 @@ data class SupervisionDraft(
     val comments: String = "",
     val actionPlan: String = "",
     val actionPlanDueDate: String = "",
+    val allPillarsPayloadJson: String = "{}",
     val recordStatus: String = "incomplete",
     val syncStatus: String = "draft",
+    val conflictPolicy: String = "none",
     val updatedAt: Long = System.currentTimeMillis(),
 )

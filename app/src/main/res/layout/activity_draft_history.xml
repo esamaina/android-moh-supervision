@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/kenya_white"
+        android:contentDescription="Filter supervision records by completion status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleView" />
@@ -34,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/kenya_green"
+        android:contentDescription="Sync all local records to server"
         android:text="Sync All"
         android:textColor="@color/kenya_white"
         app:layout_constraintEnd_toStartOf="@id/refreshBtn"
@@ -47,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/kenya_red"
+        android:contentDescription="Refresh records list"
         android:text="Refresh"
         android:textColor="@color/kenya_white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/kenya_white"
+        android:contentDescription="Delete currently selected supervision record"
         android:text="Delete Selected (long press first)"
         android:textColor="@color/kenya_black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/kenya_red"
+        android:contentDescription="Toggle selected record between complete and incomplete"
         android:text="Toggle Complete/Incomplete"
         android:textColor="@color/kenya_white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,11 +89,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/kenya_green"
+        android:contentDescription="Sync selected supervision record"
         android:text="Sync Selected"
         android:textColor="@color/kenya_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toggleStatusBtn" />
+
+    <Button
+        android:id="@+id/resolveConflictBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/kenya_white"
+        android:contentDescription="Resolve conflict policy for selected record"
+        android:text="Resolve Sync Conflict"
+        android:textColor="@color/kenya_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/syncSelectedBtn" />
 
     <ListView
         android:id="@+id/draftList"
@@ -96,9 +115,10 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:background="@color/surface_light"
+        android:contentDescription="Supervision records list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/syncSelectedBtn" />
+        app:layout_constraintTop_toBottomOf="@id/resolveConflictBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

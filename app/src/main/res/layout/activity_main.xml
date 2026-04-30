@@ -79,7 +79,6 @@
         android:hint="Device ID"
         android:textColor="@color/kenya_black"
         android:textColorHint="@color/kenya_green"
-        android:text="android-dev-001"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordInput" />
@@ -122,6 +121,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pushSyncBtn" />
 
+    <Button
+        android:id="@+id/retryFailedBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/kenya_red"
+        android:text="Retry Failed Queue"
+        android:textColor="@color/kenya_white"
+        app:layout_constraintEnd_toStartOf="@id/clearQueueBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stateBtn"
+        app:layout_constraintWidth_percent="0.48" />
+
+    <Button
+        android:id="@+id/clearQueueBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/kenya_white"
+        android:text="Clear Queue"
+        android:textColor="@color/kenya_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/retryFailedBtn"
+        app:layout_constraintTop_toBottomOf="@id/stateBtn"
+        app:layout_constraintWidth_percent="0.48" />
+
     <TextView
         android:id="@+id/outputView"
         android:layout_width="0dp"
@@ -135,6 +160,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/stateBtn" />
+        app:layout_constraintTop_toBottomOf="@id/retryFailedBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
