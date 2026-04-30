@@ -29,6 +29,29 @@
         app:layout_constraintTop_toBottomOf="@id/titleView" />
 
     <Button
+        android:id="@+id/loadUsersBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/kenya_green"
+        android:text="Load Users"
+        android:textColor="@color/kenya_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roleView" />
+
+    <ListView
+        android:id="@+id/usersList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/surface_light"
+        app:layout_constraintBottom_toTopOf="@id/openWebUsersBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadUsersBtn" />
+
+    <Button
         android:id="@+id/openWebUsersBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -36,8 +59,9 @@
         android:backgroundTint="@color/kenya_white"
         android:text="Open Web User Management Fallback"
         android:textColor="@color/kenya_black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/roleView" />
+        app:layout_constraintTop_toBottomOf="@id/usersList" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

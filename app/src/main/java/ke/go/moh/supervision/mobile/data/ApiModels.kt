@@ -26,3 +26,18 @@ data class StateResponse(
     val lastSyncedAt: String?,
     val serverTime: String? = null,
 )
+
+data class MobileUser(
+    val id: String,
+    val username: String,
+    val email: String,
+    val role: String,
+    val county: String? = null,
+    val sub_county: String? = null,
+    val chu: String? = null,
+    val user_status: String = "active",
+)
+
+data class MobileUsersResponse(
+    val users: List<MobileUser> = emptyList(),
+)
